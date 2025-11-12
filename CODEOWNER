@@ -1,0 +1,3 @@
+# Syntax: pattern @username or @teamname
+# Example to set default code owners for all files
+* @IT-Joshua
