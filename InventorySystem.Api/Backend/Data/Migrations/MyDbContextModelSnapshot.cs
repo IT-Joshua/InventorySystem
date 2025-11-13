@@ -4,19 +4,16 @@ using Backend.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace Backend.Migrations
+namespace Backend.Data.Migrations
 {
     [DbContext(typeof(MyDbContext))]
-    [Migration("20251112022756_users")]
-    partial class users
+    partial class MyDbContextModelSnapshot : ModelSnapshot
     {
-        /// <inheritdoc />
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -40,9 +37,26 @@ namespace Backend.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Tbl_Access");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Access = "View Module 1"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Access = "Add Module 1"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Access = "Edit Module 1"
+                        });
                 });
 
-            modelBuilder.Entity("Backend.Entities.Users.Tbl_Assigned_Access", b =>
+            modelBuilder.Entity("Backend.Entities.Users.Tbl_Grant_Access", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -50,25 +64,22 @@ namespace Backend.Migrations
 
                     MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int?>("AccessIdId")
+                    b.Property<int>("AccessId")
                         .HasColumnType("int");
 
-                    b.Property<int>("Access_Id")
-                        .HasColumnType("int");
+                    b.Property<bool>("Status")
+                        .HasColumnType("tinyint(1)");
 
-                    b.Property<int?>("UserId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("User_Id")
+                    b.Property<int>("UserId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("AccessIdId");
+                    b.HasIndex("AccessId");
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Tbl_Assigned_Access");
+                    b.ToTable("Tbl_Grant_Access");
                 });
 
             modelBuilder.Entity("Backend.Entities.Users.Tbl_Logs", b =>
@@ -80,7 +91,9 @@ namespace Backend.Migrations
                     MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<DateTime>("Datetime")
-                        .HasColumnType("datetime(6)");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime(6)")
+                        .HasDefaultValueSql("CURRENT_TIMESTAMP");
 
                     b.Property<int>("Error_id")
                         .HasColumnType("int");
@@ -93,10 +106,7 @@ namespace Backend.Migrations
                         .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.Property<int?>("UserId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("User_Id")
+                    b.Property<int>("UserId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -134,6 +144,9 @@ namespace Backend.Migrations
                         .IsRequired()
                         .HasColumnType("longtext");
 
+                    b.Property<bool>("Status")
+                        .HasColumnType("tinyint(1)");
+
                     b.Property<string>("Username")
                         .IsRequired()
                         .HasColumnType("longtext");
@@ -143,17 +156,21 @@ namespace Backend.Migrations
                     b.ToTable("Tbl_Users");
                 });
 
-            modelBuilder.Entity("Backend.Entities.Users.Tbl_Assigned_Access", b =>
+            modelBuilder.Entity("Backend.Entities.Users.Tbl_Grant_Access", b =>
                 {
-                    b.HasOne("Backend.Entities.Users.Tbl_Access", "AccessId")
+                    b.HasOne("Backend.Entities.Users.Tbl_Access", "Access")
                         .WithMany()
-                        .HasForeignKey("AccessIdId");
+                        .HasForeignKey("AccessId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("Backend.Entities.Users.Tbl_Users", "User")
                         .WithMany()
-                        .HasForeignKey("UserId");
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
-                    b.Navigation("AccessId");
+                    b.Navigation("Access");
 
                     b.Navigation("User");
                 });
@@ -162,7 +179,9 @@ namespace Backend.Migrations
                 {
                     b.HasOne("Backend.Entities.Users.Tbl_Users", "User")
                         .WithMany()
-                        .HasForeignKey("UserId");
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("User");
                 });
