@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\GIT\\BACKEND\\backend\\Backend.csproj": {}
+    "D:\\GIT\\InventorySystem\\InventorySystem.Api\\backend\\Backend.csproj": {}
   },
   "projects": {
-    "D:\\GIT\\BACKEND\\backend\\Backend.csproj": {
+    "D:\\GIT\\InventorySystem\\InventorySystem.Api\\backend\\Backend.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\GIT\\BACKEND\\backend\\Backend.csproj",
+        "projectUniqueName": "D:\\GIT\\InventorySystem\\InventorySystem.Api\\backend\\Backend.csproj",
         "projectName": "Backend",
-        "projectPath": "D:\\GIT\\BACKEND\\backend\\Backend.csproj",
+        "projectPath": "D:\\GIT\\InventorySystem\\InventorySystem.Api\\backend\\Backend.csproj",
         "packagesPath": "C:\\Users\\SLC-Norwin\\.nuget\\packages\\",
-        "outputPath": "D:\\GIT\\BACKEND\\backend\\obj\\",
+        "outputPath": "D:\\GIT\\InventorySystem\\InventorySystem.Api\\backend\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

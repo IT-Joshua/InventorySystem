@@ -1,7 +1,9 @@
-GET http://localhost:5209/user/test
+//Users CRUD
+### All Users
+GET http://localhost:5209/user
 
-###
-POST http://localhost:5209/user/test
+### Add User
+POST http://localhost:5209/user
 Content-Type: application/json
 
 {
@@ -10,7 +12,16 @@ Content-Type: application/json
 "Email" : "norwin.nabong@skybest.com.ph",
 "Username" : "nnabong",
 "Password" : "skyNorwin01",
-"Access" : "hehe"
+"Access" : "admin",
+"Status" : false
+}
+
+###
+POST http://localhost:5209/user/access
+Content-Type: application/json
+
+{
+"access": "View Module 2"
 }
 
 ### POST a new user
@@ -28,7 +39,23 @@ Content-Type: application/json
 
 
 ###
-GET http://localhost:5209
+GET http://localhost:5209/user/access
+
+### POST a new user
+POST http://localhost:5209/user/access
+Content-Type: application/json
+
+{
+  "Access": "View Module 2"
+}
+
+### POST a new user
+PUT http://localhost:5209/user/access/1
+Content-Type: application/json
+
+{
+  "Access": "View Module 2"
+}
 
 ### GET all users
 GET http://localhost:5209/user/test
@@ -47,4 +74,31 @@ Content-Type: application/json
   "Username": "nnabong",
   "Password": "skyNorwin01",
   "Access": "hehe"
+}
+
+###
+POST http://localhost:5209/user/GrantAccess
+Content-Type: application/json
+
+{
+  "UserId": 1,
+  "AccessId": 2,
+  "Status": true
+}
+
+###
+GET http://localhost:5209/user/ViewAccess/1
+
+###
+GET http://localhost:5209/user/Logs/1
+
+###
+POST http://localhost:5209/user/Logs
+Content-Type: application/json
+
+{
+  "UserId": 1,
+  "Log_type": "Logout",
+  "Log_message": "Success",
+  "Error_id": 0
 }

@@ -4,7 +4,9 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace Backend.Migrations
+#pragma warning disable CA1814 // Prefer jagged arrays over multidimensional
+
+namespace Backend.Data.Migrations
 {
     /// <inheritdoc />
     public partial class users : Migration
@@ -47,7 +49,8 @@ namespace Backend.Migrations
                     Password = table.Column<string>(type: "longtext", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     Access = table.Column<string>(type: "longtext", nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4")
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    Status = table.Column<bool>(type: "tinyint(1)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -56,29 +59,30 @@ namespace Backend.Migrations
                 .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateTable(
-                name: "Tbl_Assigned_Access",
+                name: "Tbl_Grant_Access",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    User_Id = table.Column<int>(type: "int", nullable: false),
-                    UserId = table.Column<int>(type: "int", nullable: true),
-                    Access_Id = table.Column<int>(type: "int", nullable: false),
-                    AccessIdId = table.Column<int>(type: "int", nullable: true)
+                    UserId = table.Column<int>(type: "int", nullable: false),
+                    AccessId = table.Column<int>(type: "int", nullable: false),
+                    Status = table.Column<bool>(type: "tinyint(1)", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Tbl_Assigned_Access", x => x.Id);
+                    table.PrimaryKey("PK_Tbl_Grant_Access", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Tbl_Assigned_Access_Tbl_Access_AccessIdId",
-                        column: x => x.AccessIdId,
+                        name: "FK_Tbl_Grant_Access_Tbl_Access_AccessId",
+                        column: x => x.AccessId,
                         principalTable: "Tbl_Access",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Tbl_Assigned_Access_Tbl_Users_UserId",
+                        name: "FK_Tbl_Grant_Access_Tbl_Users_UserId",
                         column: x => x.UserId,
                         principalTable: "Tbl_Users",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
 
@@ -88,14 +92,13 @@ namespace Backend.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    User_Id = table.Column<int>(type: "int", nullable: false),
-                    UserId = table.Column<int>(type: "int", nullable: true),
+                    UserId = table.Column<int>(type: "int", nullable: false),
                     Log_type = table.Column<string>(type: "longtext", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     Log_message = table.Column<string>(type: "longtext", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     Error_id = table.Column<int>(type: "int", nullable: false),
-                    Datetime = table.Column<DateTime>(type: "datetime(6)", nullable: false)
+                    Datetime = table.Column<DateTime>(type: "datetime(6)", nullable: false, defaultValueSql: "CURRENT_TIMESTAMP")
                 },
                 constraints: table =>
                 {
@@ -104,18 +107,29 @@ namespace Backend.Migrations
                         name: "FK_Tbl_Logs_Tbl_Users_UserId",
                         column: x => x.UserId,
                         principalTable: "Tbl_Users",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
 
-            migrationBuilder.CreateIndex(
-                name: "IX_Tbl_Assigned_Access_AccessIdId",
-                table: "Tbl_Assigned_Access",
-                column: "AccessIdId");
+            migrationBuilder.InsertData(
+                table: "Tbl_Access",
+                columns: new[] { "Id", "Access" },
+                values: new object[,]
+                {
+                    { 1, "View Module 1" },
+                    { 2, "Add Module 1" },
+                    { 3, "Edit Module 1" }
+                });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Tbl_Assigned_Access_UserId",
-                table: "Tbl_Assigned_Access",
+                name: "IX_Tbl_Grant_Access_AccessId",
+                table: "Tbl_Grant_Access",
+                column: "AccessId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Tbl_Grant_Access_UserId",
+                table: "Tbl_Grant_Access",
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
@@ -128,7 +142,7 @@ namespace Backend.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Tbl_Assigned_Access");
+                name: "Tbl_Grant_Access");
 
             migrationBuilder.DropTable(
                 name: "Tbl_Logs");
