@@ -22,6 +22,14 @@ public static class UserEndpoints
             .ToListAsync()
         );
 
+        //per username
+        group.MapGet("/{username}", async (string username, MyDbContext dbContext) =>
+            await dbContext.Tbl_Users
+            .Where(Tbl_Users => Tbl_Users.Username == username)
+            .AsNoTracking()
+            .ToListAsync()
+        );
+
         //add value
         group.MapPost("/", async (CreateUserDto newUser, MyDbContext dbContext) =>
           {

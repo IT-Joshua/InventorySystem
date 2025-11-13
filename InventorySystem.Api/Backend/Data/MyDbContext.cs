@@ -23,10 +23,10 @@ public class MyDbContext : DbContext
         );
 
         modelBuilder.Entity<Tbl_Users>().HasData(
-            new { id = 1, Firstname = "Mark", Lastname = "San Juan", Email = "mark@skybest.com.ph", Username = "mackyboi", Password = "skyMark01", Access = "SuperAdmin", Status = true },
-            new { id = 2, Firstname = "Joshua", Lastname = "Suba", Email = "joshua.suba@skybest.com.ph", Username = "jsuba", Password = "skyJoshua01", Access = "SuperAdmin", Status = true },
-            new { id = 3, Firstname = "Norwin", Lastname = "Nabong", Email = "norwin.nabong@gmail.com.ph", Username = "nnabong", Password = "skyNorwin01", Access = "SuperAdmin", Status = true },
-            new { id = 3, Firstname = "Dan Cedrick", Lastname = "Dela Torre", Email = "dan.delatorre@skybest.com.ph", Username = "DTorre", Password = "skyDan01", Access = "SuperAdmin", Status = true }
+            new { Id = 1, Firstname = "Mark", Lastname = "San Juan", Email = "mark@skybest.com.ph", Username = "mackyboi", Password = "skyMark01", Access = "SuperAdmin", Status = true },
+            new { Id = 2, Firstname = "Joshua", Lastname = "Suba", Email = "joshua.suba@skybest.com.ph", Username = "jsuba", Password = "skyJoshua01", Access = "SuperAdmin", Status = true },
+            new { Id = 3, Firstname = "Norwin", Lastname = "Nabong", Email = "norwin.nabong@gmail.com.ph", Username = "nnabong", Password = "skyNorwin01", Access = "SuperAdmin", Status = true },
+            new { Id = 4, Firstname = "Dan Cedrick", Lastname = "Dela Torre", Email = "dan.delatorre@skybest.com.ph", Username = "DTorre", Password = "skyDan01", Access = "SuperAdmin", Status = true }
         );
 
         modelBuilder.Entity<Tbl_Logs>()

@@ -11,7 +11,7 @@ public record class UsersDto
     string Email,
     string Username,
     string Password,
-    string Access,
+    string? Access,
     bool Status
 );
 
