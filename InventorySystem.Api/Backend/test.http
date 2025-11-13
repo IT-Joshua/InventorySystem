@@ -102,3 +102,8 @@ Content-Type: application/json
   "Log_message": "Success",
   "Error_id": 0
 }
+
+
+###
+GET http://localhost:5209/user/nnabong
+Content-Type: application/json

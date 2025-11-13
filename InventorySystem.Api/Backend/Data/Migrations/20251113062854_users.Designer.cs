@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Backend.Data.Migrations
 {
     [DbContext(typeof(MyDbContext))]
-    [Migration("20251112194213_users")]
+    [Migration("20251113062854_users")]
     partial class users
     {
         /// <inheritdoc />
@@ -128,35 +128,86 @@ namespace Backend.Data.Migrations
                     MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Access")
-                        .IsRequired()
-                        .HasColumnType("longtext");
+                        .HasMaxLength(20)
+                        .HasColumnType("varchar(20)");
 
                     b.Property<string>("Email")
                         .IsRequired()
-                        .HasColumnType("longtext");
+                        .HasMaxLength(20)
+                        .HasColumnType("varchar(20)");
 
                     b.Property<string>("Firstname")
                         .IsRequired()
-                        .HasColumnType("longtext");
+                        .HasMaxLength(20)
+                        .HasColumnType("varchar(20)");
 
                     b.Property<string>("Lastname")
                         .IsRequired()
-                        .HasColumnType("longtext");
+                        .HasMaxLength(20)
+                        .HasColumnType("varchar(20)");
 
                     b.Property<string>("Password")
                         .IsRequired()
-                        .HasColumnType("longtext");
+                        .HasMaxLength(20)
+                        .HasColumnType("varchar(20)");
 
                     b.Property<bool>("Status")
                         .HasColumnType("tinyint(1)");
 
                     b.Property<string>("Username")
                         .IsRequired()
-                        .HasColumnType("longtext");
+                        .HasMaxLength(20)
+                        .HasColumnType("varchar(20)");
 
                     b.HasKey("Id");
 
                     b.ToTable("Tbl_Users");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Access = "SuperAdmin",
+                            Email = "mark@skybest.com.ph",
+                            Firstname = "Mark",
+                            Lastname = "San Juan",
+                            Password = "skyMark01",
+                            Status = true,
+                            Username = "mackyboi"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Access = "SuperAdmin",
+                            Email = "joshua.suba@skybest.com.ph",
+                            Firstname = "Joshua",
+                            Lastname = "Suba",
+                            Password = "skyJoshua01",
+                            Status = true,
+                            Username = "jsuba"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Access = "SuperAdmin",
+                            Email = "norwin.nabong@gmail.com.ph",
+                            Firstname = "Norwin",
+                            Lastname = "Nabong",
+                            Password = "skyNorwin01",
+                            Status = true,
+                            Username = "nnabong"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Access = "SuperAdmin",
+                            Email = "dan.delatorre@skybest.com.ph",
+                            Firstname = "Dan Cedrick",
+                            Lastname = "Dela Torre",
+                            Password = "skyDan01",
+                            Status = true,
+                            Username = "DTorre"
+                        });
                 });
 
             modelBuilder.Entity("Backend.Entities.Users.Tbl_Grant_Access", b =>

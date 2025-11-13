@@ -38,17 +38,17 @@ namespace Backend.Data.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    Firstname = table.Column<string>(type: "longtext", nullable: false)
+                    Firstname = table.Column<string>(type: "varchar(20)", maxLength: 20, nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    Lastname = table.Column<string>(type: "longtext", nullable: false)
+                    Lastname = table.Column<string>(type: "varchar(20)", maxLength: 20, nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    Email = table.Column<string>(type: "longtext", nullable: false)
+                    Email = table.Column<string>(type: "varchar(20)", maxLength: 20, nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    Username = table.Column<string>(type: "longtext", nullable: false)
+                    Username = table.Column<string>(type: "varchar(20)", maxLength: 20, nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    Password = table.Column<string>(type: "longtext", nullable: false)
+                    Password = table.Column<string>(type: "varchar(20)", maxLength: 20, nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    Access = table.Column<string>(type: "longtext", nullable: false)
+                    Access = table.Column<string>(type: "varchar(20)", maxLength: 20, nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     Status = table.Column<bool>(type: "tinyint(1)", nullable: false)
                 },
@@ -120,6 +120,17 @@ namespace Backend.Data.Migrations
                     { 1, "View Module 1" },
                     { 2, "Add Module 1" },
                     { 3, "Edit Module 1" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Tbl_Users",
+                columns: new[] { "Id", "Access", "Email", "Firstname", "Lastname", "Password", "Status", "Username" },
+                values: new object[,]
+                {
+                    { 1, "SuperAdmin", "mark@skybest.com.ph", "Mark", "San Juan", "skyMark01", true, "mackyboi" },
+                    { 2, "SuperAdmin", "joshua.suba@skybest.com.ph", "Joshua", "Suba", "skyJoshua01", true, "jsuba" },
+                    { 3, "SuperAdmin", "norwin.nabong@gmail.com.ph", "Norwin", "Nabong", "skyNorwin01", true, "nnabong" },
+                    { 4, "SuperAdmin", "dan.delatorre@skybest.com.ph", "Dan Cedrick", "Dela Torre", "skyDan01", true, "DTorre" }
                 });
 
             migrationBuilder.CreateIndex(
