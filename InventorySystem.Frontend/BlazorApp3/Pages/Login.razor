@@ -121,6 +121,8 @@
 
 
     private CreateAccountModel createAccountModel = new();
+
+
     private string Message;
     private bool showCreateAccount = false;
     private int currentImageIndex = 0;
@@ -175,6 +177,8 @@
 
     private async Task HandleLogin()
     {
+
+
         if ((loginCredentials.Username == loginModels.Email || loginCredentials.Username == loginModels.Username) &&
         loginCredentials.Password == loginModels.Password)
         {
