@@ -25,7 +25,7 @@ public static class UserEndpoints
         //per username
         group.MapGet("/{username}", async (string username, MyDbContext dbContext) =>
             await dbContext.Tbl_Users
-            .Where(Tbl_Users => Tbl_Users.Username == username)
+            .Where(User => User.Username == username && User.Status != false)
             .AsNoTracking()
             .ToListAsync()
         );
