@@ -1,0 +1,152 @@
+.login-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    /* make sure it fills viewport */
+    width: 100%;
+    background-image: url('/Images/f.jpg');
+    /* use absolute path from wwwroot */
+    background-size: cover;
+    /* cover the entire area */
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+
+
+/* Floating container */
+.login-box {
+    display: flex;
+    flex-direction: row;
+    width: 850px;
+    max-width: 95%;
+    height: 520px;
+    border-radius: 20px;
+    overflow: hidden;
+    background-color: #ffffff;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+}
+
+
+
+
+
+.login-image {
+    flex: 1;
+    position: relative;
+    overflow: hidden;
+    padding: 10px;
+
+    border-radius: 20px 0 0 20px;
+
+}
+
+
+.image-slider {
+    width: 100%;
+    height: 100%;
+    position: relative;
+}
+
+
+.slide {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-size: contain;
+
+    background-position: center;
+    opacity: 0;
+    transition: opacity 1s ease-in-out;
+    border-radius: 15px;
+
+}
+
+
+.slide.active {
+    opacity: 1;
+}
+
+
+.image-overlay {
+    position: absolute;
+    bottom: 30px;
+    left: 30px;
+    background: rgba(0, 123, 255, 0.7);
+    /* semi-transparent blue overlay */
+    color: white;
+    padding: 1rem 1.5rem;
+    border-radius: 10px;
+    font-size: 1.3rem;
+    line-height: 1.4;
+}
+
+
+.login-form-area {
+    flex: 1;
+    background-color: #fefefe;
+    color: #1a1a1d;
+    padding: 3rem 2rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.form-control {
+    background-color: #f0f4f8;
+    border: 1px solid #c1d3f0;
+    color: #1a1a1d;
+}
+
+.form-control:focus {
+    background-color: #f0f4f8;
+    border-color: #0d6efd;
+
+    color: #1a1a1d;
+    box-shadow: none;
+}
+
+.btn-primary {
+    background-color: #0d6efd;
+    border: none;
+    font-weight: 500;
+}
+
+.btn-primary:hover {
+    background-color: #0b5ed7;
+}
+
+.btn-outline-primary {
+    color: #0d6efd;
+    border-color: #0d6efd;
+}
+
+.btn-outline-primary:hover {
+    background-color: #0d6efd;
+    color: white;
+}
+
+@media (max-width: 768px) {
+    .login-box {
+        flex-direction: column;
+        height: auto;
+    }
+
+    .login-image {
+        height: 200px;
+    }
+
+    .image-overlay {
+        font-size: 1rem;
+        bottom: 15px;
+        left: 15px;
+        padding: 0.75rem 1rem;
+    }
+
+    .login-form-area {
+        padding: 2rem 1.5rem;
+    }
+}
