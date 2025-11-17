@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "EdzLg7TRA7Q=",
+  "dgSpecHash": "8RJLPxjObYI=",
   "success": true,
-  "projectFilePath": "D:\\GIT\\InventorySystem-1\\InventorySystem.Api\\Backend\\Backend.csproj",
+  "projectFilePath": "D:\\GIT\\InventorySystem-1\\InventorySystem.Api\\backend\\Backend.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\SLC-Norwin\\.nuget\\packages\\azure.core\\1.38.0\\azure.core.1.38.0.nupkg.sha512",
     "C:\\Users\\SLC-Norwin\\.nuget\\packages\\azure.identity\\1.11.4\\azure.identity.1.11.4.nupkg.sha512",

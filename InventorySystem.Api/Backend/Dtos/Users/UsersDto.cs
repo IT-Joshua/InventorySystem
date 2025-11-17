@@ -17,23 +17,23 @@ public record class UsersDto
 
 public record class CreateUserDto
 (
-    [Required][StringLength(100)] string Firstname,
-    [Required][StringLength(100)] string Lastname,
+    [Required][StringLength(50)] string Firstname,
+    [Required][StringLength(50)] string Lastname,
     [Required][StringLength(100)] string Email,
-    [Required][StringLength(100)] string Username,
-    [Required][StringLength(100)] string Password,
-    [Required][StringLength(100)] string Access,
+    [Required][StringLength(50)] string Username,
+    [Required][StringLength(50)] string Password,
+    [StringLength(50)] string Access,
     [Required] bool Status
 );
 
 public record class UpdateUserDto
 (
-    [Required][StringLength(100)] string Firstname,
-    [Required][StringLength(100)] string Lastname,
+    [Required][StringLength(50)] string Firstname,
+    [Required][StringLength(50)] string Lastname,
     [Required][StringLength(100)] string Email,
-    [Required][StringLength(100)] string Username,
-    [Required][StringLength(100)] string Password,
-    [StringLength(100)] string Access,
+    [Required][StringLength(50)] string Username,
+    [Required][StringLength(50)] string Password,
+    [StringLength(50)] string Access,
     [Required] bool Status
 );
 
@@ -46,7 +46,7 @@ public record class AccessDto
 );
 public record class AddAccessDto
 (
-    [Required][StringLength(100)] string Access
+    [Required][StringLength(50)] string Access
 );
 
 //GrantAccess
