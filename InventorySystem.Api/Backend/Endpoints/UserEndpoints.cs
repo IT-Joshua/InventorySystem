@@ -1,5 +1,6 @@
 using System;
 using Backend.Data;
+using Backend.Data.Migrations;
 using Backend.Dtos.Users;
 using Backend.Entities.Users;
 using Backend.Mapping.Users;
@@ -23,12 +24,49 @@ public static class UserEndpoints
         );
 
         //per username
-        group.MapGet("/{username}", async (string username, MyDbContext dbContext) =>
-            await dbContext.Tbl_Users
-            .Where(Tbl_Users => Tbl_Users.Username == username)
-            .AsNoTracking()
-            .ToListAsync()
-        );
+        group.MapGet("/{username_email}/{Logtype}", async (string username_email, string Logtype, MyDbContext dbContext) =>
+
+            {
+                var users = await dbContext.Tbl_Users
+                        .Where(User => (User.Username == username_email || User.Email == username_email) && User.Status != false && User.Access != "")
+                        .AsNoTracking()
+                        .ToListAsync();
+                try
+                {
+                    if (users.Any())
+                    {
+                        var user = users.First();
+
+                        var log = new Tbl_Logs
+                        {
+                            UserId = user.Id,
+                            Log_type = Logtype,
+                            Log_message = "Success",
+                            Error_id = 0
+                        };
+
+                        dbContext.Tbl_Logs.Add(log);
+                        await dbContext.SaveChangesAsync();
+                    }
+                }
+                catch
+                {
+                    var user = users.First();
+
+                        var log = new Tbl_Logs
+                        {
+                            UserId = user.Id,
+                            Log_type = Logtype,
+                            Log_message = "Success",
+                            Error_id = 0
+                        };
+
+                        dbContext.Tbl_Logs.Add(log);
+                        await dbContext.SaveChangesAsync();
+                }
+                return users;
+
+            });
 
         //add value
         group.MapPost("/", async (CreateUserDto newUser, MyDbContext dbContext) =>
@@ -43,7 +81,7 @@ public static class UserEndpoints
                 .AsNoTracking()
                 .ToListAsync()
         );
-//access
+        //access
         group.MapPost("/Access", async (AddAccessDto addAccess, MyDbContext dbContext) =>
             {
                 Tbl_Access Access = addAccess.ToAccessEntity();
@@ -94,12 +132,12 @@ public static class UserEndpoints
                 .ToListAsync()
         );
 
-         group.MapPost("/Logs", async (AddLogsDto Logs, MyDbContext dbContext) =>
-            {
-                Tbl_Logs tbl_Logs = Logs.ToLogsEntity();
-                dbContext.Tbl_Logs.Add(tbl_Logs);
-                await dbContext.SaveChangesAsync();
-            }
+        group.MapPost("/Logs", async (AddLogsDto Logs, MyDbContext dbContext) =>
+           {
+               Tbl_Logs tbl_Logs = Logs.ToLogsEntity();
+               dbContext.Tbl_Logs.Add(tbl_Logs);
+               await dbContext.SaveChangesAsync();
+           }
         );
 
 

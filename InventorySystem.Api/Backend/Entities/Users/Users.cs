@@ -8,22 +8,22 @@ public class Tbl_Users
 {
     public int Id { get; set; }
 
-    [MaxLength(20)]
+    [MaxLength(50)]
     public required string Firstname { get; set; }
 
-    [MaxLength(20)]
+    [MaxLength(50)]
     public required string Lastname { get; set; }
 
-    [MaxLength(20)]
+    [MaxLength(100)]
     public required string Email { get; set; }
     
-    [MaxLength(20)]
+    [MaxLength(50)]
     public required string Username { get; set; }  
 
-    [MaxLength(20)]
+    [MaxLength(50)]
     public required string Password { get; set; }
 
-    [MaxLength(20)]
+    [MaxLength(50)]
     public string? Access { get; set; }
     
     public required bool Status { get; set; }
@@ -32,6 +32,7 @@ public class Tbl_Users
 public class Tbl_Access
 { 
     public int Id { get; set; }
+    [MaxLength(50)]
     public required string Access { get; set; }
 }
 
@@ -50,7 +51,9 @@ public class Tbl_Logs
     public int Id { get; set; }
     public int UserId { get; set; }
     public Tbl_Users? User { get; set; }
+    [MaxLength(100)]
     public required string Log_type { get; set; }
+    [MaxLength(100)]
     public required string Log_message { get; set; }
     public int Error_id { get; set; }
     public DateTime Datetime { get; set; }
