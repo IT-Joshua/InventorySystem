@@ -1,0 +1,32 @@
+@inject IJSRuntime JS
+@inject NavigationManager NavigationManager
+
+@if (isAuthorized)
+{
+    @ChildContent
+}
+else
+{
+    <p>Redirecting to login...</p>
+}
+
+@code {
+    [Parameter] public RenderFragment ChildContent { get; set; }
+
+    private bool isAuthorized = false;
+
+    protected override async Task OnInitializedAsync()
+    {
+        var savedUsername = await JS.InvokeAsync<string>("localStorage.getItem", "savedUsername");
+        var savedPassword = await JS.InvokeAsync<string>("localStorage.getItem", "savedPassword");
+
+        if (!string.IsNullOrEmpty(savedUsername) && !string.IsNullOrEmpty(savedPassword))
+        {
+            isAuthorized = true;
+        }
+        else
+        {
+            NavigationManager.NavigateTo("/login", forceLoad: true);
+        }
+    }
+}

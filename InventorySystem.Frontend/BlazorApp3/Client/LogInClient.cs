@@ -26,8 +26,8 @@ namespace BlazorApp3.Client
         public async Task<List<LogInModels>> GetUsersAsync(string username)
         {
             var users = await _httpClient.GetFromJsonAsync<List<LogInModels>>($"user/{username}/login");
-            if (users == null || users.Count == 0)
-                throw new Exception("User not found");
+            // if (users == null)
+            //     throw new Exception("User not found");
             return users;
         }
 

@@ -76,6 +76,7 @@ using BlazorApp3;
 using BlazorApp3.Client;
 using System.Net.Http.Json;
 
+
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
 
 builder.RootComponents.Add<App>("#app");
@@ -85,5 +86,9 @@ var ApiUrl = builder.Configuration["ApiUrl"] ??
     throw new Exception("ApiUrl is not set");
 
 builder.Services.AddHttpClient<LogInClient>(client => client.BaseAddress = new Uri(ApiUrl));
+
+
+
+
 
 await builder.Build().RunAsync();
