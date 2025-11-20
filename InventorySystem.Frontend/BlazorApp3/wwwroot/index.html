@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>BlazorApp3</title>
+    <title>Inventory Sysytem</title>
     <base href="/" />
     <link rel="stylesheet" href="lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="css/app.css" />
@@ -30,5 +30,41 @@
     </div>
     <script src="_framework/blazor.webassembly.js"></script>
 </body>
+<script>
+
+    (function ()
+    {
+
+        const SessionLoggedIn = localStorage.getItem("LoggedInUser");
+        const localLoggedIn = localStorage.getItem("LoggedInUser");
+        if (localLoggedIn || SessionLoggedIn)
+        {
+            if (window.location.pathname === "/login" || window.location.pathname === "/")
+            {
+                window.location.replace("/home");
+            }
+        }
+        else
+        {
+            if (window.location.pathname !== "/login")
+            {
+                window.location.replace("/login");
+            }
+        }
+
+
+
+    })();
+    // (function ()
+    // {
+
+    //     const u = localStorage.getItem("savedUsername");
+    //     const p = localStorage.getItem("savedPassword");
+    //     if (u && p && window.location.pathname === "/login")
+    //     {
+    //         window.location.replace("/home");
+    //     }
+    // })();
+</script>
 
 </html>

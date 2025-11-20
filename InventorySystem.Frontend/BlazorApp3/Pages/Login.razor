@@ -155,7 +155,8 @@
 
     protected override void OnInitialized()
     {
-        // Rotate images every 5 seconds
+
+        loginCredentials.RememberMe = true;
         var timer = new System.Timers.Timer(5000);
         timer.Elapsed += (s, e) =>
         {
@@ -167,7 +168,7 @@
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
-        if (firstRender)
+        @* if (firstRender)
         {
             var savedUsername = await JS.InvokeAsync<string>("localStorage.getItem", "savedUsername");
             var savedPassword = await JS.InvokeAsync<string>("localStorage.getItem", "savedPassword");
@@ -180,7 +181,7 @@
                 await Task.Delay(300);
                 await HandleLogin();
             }
-        }
+        } *@
     }
 
     private async Task HandleLogin()
@@ -209,11 +210,11 @@
 
 
 
-        loginModels = await loginClient.GetUsersAsync(loginCredentials.Username);
+        @* loginModels = await loginClient.GetUsersAsync(loginCredentials.Username);
 
         // Use the first user from the list
         var user = loginModels.FirstOrDefault();
-
+        Console.WriteLine(user.Username);
 
         if (loginModels != null && loginCredentials.Password == user.Password)
         {
@@ -223,11 +224,13 @@
             {
                 await JS.InvokeVoidAsync("localStorage.setItem", "savedUsername", loginCredentials.Username);
                 await JS.InvokeVoidAsync("localStorage.setItem", "savedPassword", loginCredentials.Password);
+                await JS.InvokeVoidAsync("localStorage.setItem", "LoggedInUser", loginCredentials.Username);
             }
             else
             {
                 await JS.InvokeVoidAsync("localStorage.removeItem", "savedUsername");
                 await JS.InvokeVoidAsync("localStorage.removeItem", "savedPassword");
+                await JS.InvokeVoidAsync("localStorage.setItem", "LoggedInUser", loginCredentials.Username);
             }
 
             NavigationManager.NavigateTo("/home", forceLoad: true);
@@ -235,9 +238,37 @@
         else
         {
             await ShowMessage("Invalid username or password");
+        } *@
+
+        loginModels = await loginClient.GetUsersAsync(loginCredentials.Username);
+
+
+        var user = loginModels.FirstOrDefault();
+
+        if (user != null && loginCredentials.Password == user.Password)
+        {
+            Console.WriteLine(user.Username);
+
+            if (loginCredentials.RememberMe)
+            {
+                await JS.InvokeVoidAsync("localStorage.setItem", "LoggedInUser", loginCredentials.Username);
+
+            }
+            else
+            {
+                await JS.InvokeVoidAsync("sessionStorage.setItem", "LoggedInUser");
+
+            }
+
+
+            @* await JS.InvokeVoidAsync("localStorage.setItem", "LoggedInUser", loginCredentials.Username); *@
+
+            NavigationManager.NavigateTo("/home", forceLoad: true);
         }
-
-
+        else
+        {
+            await ShowMessage("Invalid username or password");
+        }
 
 
 
@@ -273,7 +304,7 @@
             Status = true
         };
 
-        // Send to API
+
         var result = await loginClient.CreateUserAsync(newUser);
         @* showCreateAccount = false;
         createAccountModel = new CreateAccountModel(); *@
@@ -301,19 +332,5 @@
         public bool RememberMe { get; set; }
     }
 
-    @* public class CreateAccountModel
-    {
-        [Required]
-        public string FirstName { get; set; }
-        [Required]
-        public string LastName { get; set; }
-        [Required]
-        public string Username { get; set; }
-        [Required]
-        public string Email { get; set; }
-        [Required]
-        public string Password { get; set; }
-        [Required]
-        public string ConfirmPassword { get; set; }
-    } *@
+
 }
