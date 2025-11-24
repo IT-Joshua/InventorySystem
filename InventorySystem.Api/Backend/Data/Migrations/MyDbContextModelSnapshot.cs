@@ -22,7 +22,7 @@ namespace Backend.Data.Migrations
 
             MySqlModelBuilderExtensions.AutoIncrementColumns(modelBuilder);
 
-            modelBuilder.Entity("Backend.Entities.Users.Tbl_Access", b =>
+            modelBuilder.Entity("Backend.Entities.Users.Access_entity", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -57,7 +57,7 @@ namespace Backend.Data.Migrations
                         });
                 });
 
-            modelBuilder.Entity("Backend.Entities.Users.Tbl_Grant_Access", b =>
+            modelBuilder.Entity("Backend.Entities.Users.Grant_Access_entity", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -83,7 +83,7 @@ namespace Backend.Data.Migrations
                     b.ToTable("Tbl_Grant_Access");
                 });
 
-            modelBuilder.Entity("Backend.Entities.Users.Tbl_Logs", b =>
+            modelBuilder.Entity("Backend.Entities.Users.Logs_entity", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -101,8 +101,7 @@ namespace Backend.Data.Migrations
 
                     b.Property<string>("Log_message")
                         .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("varchar(100)");
+                        .HasColumnType("longtext");
 
                     b.Property<string>("Log_type")
                         .IsRequired()
@@ -119,7 +118,7 @@ namespace Backend.Data.Migrations
                     b.ToTable("Tbl_Logs");
                 });
 
-            modelBuilder.Entity("Backend.Entities.Users.Tbl_Users", b =>
+            modelBuilder.Entity("Backend.Entities.Users.User_entity", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -140,6 +139,9 @@ namespace Backend.Data.Migrations
                         .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("varchar(50)");
+
+                    b.Property<DateTime?>("Forgotpassword")
+                        .HasColumnType("datetime(6)");
 
                     b.Property<string>("Lastname")
                         .IsRequired()
@@ -190,7 +192,7 @@ namespace Backend.Data.Migrations
                         {
                             Id = 3,
                             Access = "SuperAdmin",
-                            Email = "norwin.nabong@gmail.com.ph",
+                            Email = "norwin.nabong@skybest.com.ph",
                             Firstname = "Norwin",
                             Lastname = "Nabong",
                             Password = "skyNorwin01",
@@ -210,15 +212,15 @@ namespace Backend.Data.Migrations
                         });
                 });
 
-            modelBuilder.Entity("Backend.Entities.Users.Tbl_Grant_Access", b =>
+            modelBuilder.Entity("Backend.Entities.Users.Grant_Access_entity", b =>
                 {
-                    b.HasOne("Backend.Entities.Users.Tbl_Access", "Access")
+                    b.HasOne("Backend.Entities.Users.Access_entity", "Access")
                         .WithMany()
                         .HasForeignKey("AccessId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Backend.Entities.Users.Tbl_Users", "User")
+                    b.HasOne("Backend.Entities.Users.User_entity", "User")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -229,9 +231,9 @@ namespace Backend.Data.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("Backend.Entities.Users.Tbl_Logs", b =>
+            modelBuilder.Entity("Backend.Entities.Users.Logs_entity", b =>
                 {
-                    b.HasOne("Backend.Entities.Users.Tbl_Users", "User")
+                    b.HasOne("Backend.Entities.Users.User_entity", "User")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)

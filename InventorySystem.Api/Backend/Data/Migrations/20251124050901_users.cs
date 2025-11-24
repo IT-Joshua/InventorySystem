@@ -50,7 +50,8 @@ namespace Backend.Data.Migrations
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     Access = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    Status = table.Column<bool>(type: "tinyint(1)", nullable: false)
+                    Status = table.Column<bool>(type: "tinyint(1)", nullable: false),
+                    Forgotpassword = table.Column<DateTime>(type: "datetime(6)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -95,7 +96,7 @@ namespace Backend.Data.Migrations
                     UserId = table.Column<int>(type: "int", nullable: false),
                     Log_type = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    Log_message = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: false)
+                    Log_message = table.Column<string>(type: "longtext", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     Error_id = table.Column<int>(type: "int", nullable: false),
                     Datetime = table.Column<DateTime>(type: "datetime(6)", nullable: false, defaultValueSql: "CURRENT_TIMESTAMP")
@@ -124,13 +125,13 @@ namespace Backend.Data.Migrations
 
             migrationBuilder.InsertData(
                 table: "Tbl_Users",
-                columns: new[] { "Id", "Access", "Email", "Firstname", "Lastname", "Password", "Status", "Username" },
+                columns: new[] { "Id", "Access", "Email", "Firstname", "Forgotpassword", "Lastname", "Password", "Status", "Username" },
                 values: new object[,]
                 {
-                    { 1, "SuperAdmin", "mark@skybest.com.ph", "Mark", "San Juan", "skyMark01", true, "mackyboi" },
-                    { 2, "SuperAdmin", "joshua.suba@skybest.com.ph", "Joshua", "Suba", "skyJoshua01", true, "jsuba" },
-                    { 3, "SuperAdmin", "norwin.nabong@gmail.com.ph", "Norwin", "Nabong", "skyNorwin01", true, "nnabong" },
-                    { 4, "SuperAdmin", "dan.delatorre@skybest.com.ph", "Dan Cedrick", "Dela Torre", "skyDan01", true, "DTorre" }
+                    { 1, "SuperAdmin", "mark@skybest.com.ph", "Mark", null, "San Juan", "skyMark01", true, "mackyboi" },
+                    { 2, "SuperAdmin", "joshua.suba@skybest.com.ph", "Joshua", null, "Suba", "skyJoshua01", true, "jsuba" },
+                    { 3, "SuperAdmin", "norwin.nabong@skybest.com.ph", "Norwin", null, "Nabong", "skyNorwin01", true, "nnabong" },
+                    { 4, "SuperAdmin", "dan.delatorre@skybest.com.ph", "Dan Cedrick", null, "Dela Torre", "skyDan01", true, "DTorre" }
                 });
 
             migrationBuilder.CreateIndex(
