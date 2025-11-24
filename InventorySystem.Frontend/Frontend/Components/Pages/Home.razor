@@ -1,0 +1,21 @@
+﻿@page "/home"
+@inject IJSRuntime JS
+@inject NavigationManager NavigationManager
+
+
+<h1>Welcome to Home</h1>
+<button class="btn btn-danger" @onclick="Logout">Logout</button>
+
+@code {
+    private async Task Logout()
+    {
+
+        @* await JS.InvokeVoidAsync("localStorage.removeItem", "savedUsername"); *@
+
+        await JS.InvokeVoidAsync("localStorage.removeItem", "LoggedInUser");
+        await JS.InvokeVoidAsync("sessionStorage.removeItem", "LoggedInUser");
+        // Redirect to login page
+        NavigationManager.NavigateTo("/login", forceLoad: true);
+
+    }
+}
