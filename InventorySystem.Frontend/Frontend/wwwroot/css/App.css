@@ -101,9 +101,9 @@
      background-color: #fefefe;
      color: #1a1a1d;
      padding: 3rem 2rem;
-     display: flex;
+     /* display: flex;
      flex-direction: column;
-     justify-content: center;
+     justify-content: center; */
  }
 
  .form-control {
