@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Backend.Data.Migrations
 {
     [DbContext(typeof(MyDbContext))]
-    [Migration("20251124050901_users")]
-    partial class users
+    [Migration("20251128073817__InitialCreation")]
+    partial class _InitialCreation
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -74,8 +74,8 @@ namespace Backend.Data.Migrations
                     b.Property<bool>("Status")
                         .HasColumnType("tinyint(1)");
 
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("char(36)");
 
                     b.HasKey("Id");
 
@@ -86,13 +86,11 @@ namespace Backend.Data.Migrations
                     b.ToTable("Tbl_Grant_Access");
                 });
 
-            modelBuilder.Entity("Backend.Entities.Users.Logs_entity", b =>
+            modelBuilder.Entity("Backend.Entities.Users.Log", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
+                        .HasColumnType("char(36)");
 
                     b.Property<DateTime>("Datetime")
                         .ValueGeneratedOnAdd()
@@ -111,8 +109,8 @@ namespace Backend.Data.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("varchar(100)");
 
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("char(36)");
 
                     b.HasKey("Id");
 
@@ -121,17 +119,14 @@ namespace Backend.Data.Migrations
                     b.ToTable("Tbl_Logs");
                 });
 
-            modelBuilder.Entity("Backend.Entities.Users.User_entity", b =>
+            modelBuilder.Entity("Backend.Entities.Users.User", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
+                        .HasColumnType("char(36)");
+
+                    b.Property<int>("ApprovalStatus")
                         .HasColumnType("int");
-
-                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Access")
-                        .HasMaxLength(50)
-                        .HasColumnType("varchar(50)");
 
                     b.Property<string>("Email")
                         .IsRequired()
@@ -140,24 +135,23 @@ namespace Backend.Data.Migrations
 
                     b.Property<string>("Firstname")
                         .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("varchar(50)");
+                        .HasMaxLength(100)
+                        .HasColumnType("varchar(100)");
 
                     b.Property<DateTime?>("Forgotpassword")
                         .HasColumnType("datetime(6)");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("tinyint(1)");
 
                     b.Property<string>("Lastname")
                         .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("varchar(50)");
 
-                    b.Property<string>("Password")
+                    b.Property<string>("PasswordHash")
                         .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("varchar(50)");
-
-                    b.Property<bool>("Status")
-                        .HasColumnType("tinyint(1)");
+                        .HasColumnType("longtext");
 
                     b.Property<string>("Username")
                         .IsRequired()
@@ -167,52 +161,6 @@ namespace Backend.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Tbl_Users");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Access = "SuperAdmin",
-                            Email = "mark@skybest.com.ph",
-                            Firstname = "Mark",
-                            Lastname = "San Juan",
-                            Password = "skyMark01",
-                            Status = true,
-                            Username = "mackyboi"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Access = "SuperAdmin",
-                            Email = "joshua.suba@skybest.com.ph",
-                            Firstname = "Joshua",
-                            Lastname = "Suba",
-                            Password = "skyJoshua01",
-                            Status = true,
-                            Username = "jsuba"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Access = "SuperAdmin",
-                            Email = "norwin.nabong@skybest.com.ph",
-                            Firstname = "Norwin",
-                            Lastname = "Nabong",
-                            Password = "skyNorwin01",
-                            Status = true,
-                            Username = "nnabong"
-                        },
-                        new
-                        {
-                            Id = 4,
-                            Access = "SuperAdmin",
-                            Email = "dan.delatorre@skybest.com.ph",
-                            Firstname = "Dan Cedrick",
-                            Lastname = "Dela Torre",
-                            Password = "skyDan01",
-                            Status = true,
-                            Username = "DTorre"
-                        });
                 });
 
             modelBuilder.Entity("Backend.Entities.Users.Grant_Access_entity", b =>
@@ -223,7 +171,7 @@ namespace Backend.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Backend.Entities.Users.User_entity", "User")
+                    b.HasOne("Backend.Entities.Users.User", "User")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -234,9 +182,9 @@ namespace Backend.Data.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("Backend.Entities.Users.Logs_entity", b =>
+            modelBuilder.Entity("Backend.Entities.Users.Log", b =>
                 {
-                    b.HasOne("Backend.Entities.Users.User_entity", "User")
+                    b.HasOne("Backend.Entities.Users.User", "User")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)

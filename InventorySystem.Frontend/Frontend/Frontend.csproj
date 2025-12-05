@@ -8,6 +8,9 @@
 
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="9.0.10" />
     <PackageReference Include="MudBlazor" Version="8.*" />
+    <PackageReference Include="MudBlazor.ThemeManager" Version="3.0.0" />
+    <PackageReference Include="MudBlazor.Translations" Version="2.7.0" />
   </ItemGroup>
 </Project>

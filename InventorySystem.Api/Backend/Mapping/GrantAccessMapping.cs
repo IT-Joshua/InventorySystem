@@ -1,27 +1,27 @@
 using System;
-using Backend.Dtos.Users;
-using Backend.Entities.Users;
+using Backend.Dtos;
+using Backend.Entities;
 
-namespace Backend.Mapping.Users;
+namespace Backend.Mapping;
 
 
 public static class GrantAccessMapping
 {
     //Grant Access
-    public static GrantAccessDto ToGrantAccessList(this Grant_Access_entity GrantAccessDto)
+    public static GrantAccessDto ToGrantAccessList(this GrantAccess GrantAccessDto)
     {
         return new(
             GrantAccessDto.Id,
             GrantAccessDto.User!.Firstname,
             GrantAccessDto.User!.Lastname,
-            GrantAccessDto.Access!.Access,
+            GrantAccessDto.Access!.AccessName,
             GrantAccessDto.Status
         );
     }
 
-    public static Grant_Access_entity ToGrantAccessEntity(this AddGrantAccessDto item)
+    public static GrantAccess ToGrantAccessEntity(this AddGrantAccessDto item)
     {
-        return new Grant_Access_entity()
+        return new GrantAccess()
         {
             UserId = item.UserId,
             AccessId = item.AccessId,

@@ -1,10 +1,53 @@
 ﻿@page "/home"
+@using Frontend.Client
 @inject IJSRuntime JS
 @inject NavigationManager NavigationManager
+@inject LoginClients LoginClient
 
 <PageTitle>AITS : HOME</PageTitle>
+
+<MudContainer Class="mt-16 px-8" MaxWidth="MaxWidth.False">
+    <MudGrid>
+        
+        <MudItem xs="12" sm="6" md="4">
+            <MudPaper Elevation="2" Class="pa-4" Style="height: 200px;"></MudPaper>
+        </MudItem>
+        <MudItem xs="12" sm="6" md="4">
+            <MudPaper Elevation="2" Class="pa-4" Style="height: 200px;"></MudPaper>
+        </MudItem>
+        <MudItem xs="12" sm="12" md="4">
+            <MudPaper Elevation="2" Class="pa-4" Style="height: 200px;"></MudPaper>
+        </MudItem>
+        <MudItem xs="12" sm="6">
+            <MudGrid>
+                <MudItem xs="12">
+                    <MudPaper Elevation="2" Class="pa-4" Style="height: 200px;"></MudPaper>
+                </MudItem>
+                <MudItem xs="12">
+                    <MudPaper Elevation="2" Class="pa-4" Style="height: 200px;"></MudPaper>
+                </MudItem>
+            </MudGrid>
+        </MudItem>
+        <MudItem xs="12" sm="6">
+            <MudPaper Elevation="2" Class="pa-4" Style="height: 100%"></MudPaper>
+        </MudItem>
+        <MudItem xs="12" sm="6" md="4">
+            <MudPaper Elevation="2" Class="pa-4" Style="height: 200px;"></MudPaper>
+        </MudItem>
+        <MudItem xs="12" sm="6" md="4">
+            <MudPaper Elevation="2" Class="pa-4" Style="height: 200px;"></MudPaper>
+        </MudItem>
+        <MudItem xs="12" sm="12" md="4">
+            <MudPaper Elevation="2" Class="pa-4" Style="height: 200px;"></MudPaper>
+        </MudItem>
+    </MudGrid>
+</MudContainer>
+<MudContainer>
+<MudButton @onclick="@AccessAuth">test</MudButton>
 <h1>Welcome to Home</h1>
 <button class="btn btn-danger" @onclick="Logout">Logout</button>
+</MudContainer>
+
 
 @code {
     private async Task Logout()
@@ -16,6 +59,13 @@
         await JS.InvokeVoidAsync("sessionStorage.removeItem", "LoggedInUser");
         // Redirect to login page
         NavigationManager.NavigateTo("/login", forceLoad: true);
+    }
 
+    private async Task AccessAuth(){
+        var response = LoginClient.GetAuthStatusAsync();
+
+        if(response is not null){
+            
+        }
     }
 }

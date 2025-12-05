@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Backend.Data.Migrations
 {
     /// <inheritdoc />
-    public partial class users : Migration
+    public partial class _InitialCreation : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -36,9 +36,8 @@ namespace Backend.Data.Migrations
                 name: "Tbl_Users",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    Firstname = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: false)
+                    Id = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
+                    Firstname = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     Lastname = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
@@ -46,11 +45,10 @@ namespace Backend.Data.Migrations
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     Username = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    Password = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: false)
+                    PasswordHash = table.Column<string>(type: "longtext", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    Access = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: true)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    Status = table.Column<bool>(type: "tinyint(1)", nullable: false),
+                    ApprovalStatus = table.Column<int>(type: "int", nullable: false),
+                    IsActive = table.Column<bool>(type: "tinyint(1)", nullable: false),
                     Forgotpassword = table.Column<DateTime>(type: "datetime(6)", nullable: true)
                 },
                 constraints: table =>
@@ -65,7 +63,7 @@ namespace Backend.Data.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    UserId = table.Column<int>(type: "int", nullable: false),
+                    UserId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
                     AccessId = table.Column<int>(type: "int", nullable: false),
                     Status = table.Column<bool>(type: "tinyint(1)", nullable: false)
                 },
@@ -91,9 +89,8 @@ namespace Backend.Data.Migrations
                 name: "Tbl_Logs",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    UserId = table.Column<int>(type: "int", nullable: false),
+                    Id = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
+                    UserId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
                     Log_type = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     Log_message = table.Column<string>(type: "longtext", nullable: false)
@@ -121,17 +118,6 @@ namespace Backend.Data.Migrations
                     { 1, "View Module 1" },
                     { 2, "Add Module 1" },
                     { 3, "Edit Module 1" }
-                });
-
-            migrationBuilder.InsertData(
-                table: "Tbl_Users",
-                columns: new[] { "Id", "Access", "Email", "Firstname", "Forgotpassword", "Lastname", "Password", "Status", "Username" },
-                values: new object[,]
-                {
-                    { 1, "SuperAdmin", "mark@skybest.com.ph", "Mark", null, "San Juan", "skyMark01", true, "mackyboi" },
-                    { 2, "SuperAdmin", "joshua.suba@skybest.com.ph", "Joshua", null, "Suba", "skyJoshua01", true, "jsuba" },
-                    { 3, "SuperAdmin", "norwin.nabong@skybest.com.ph", "Norwin", null, "Nabong", "skyNorwin01", true, "nnabong" },
-                    { 4, "SuperAdmin", "dan.delatorre@skybest.com.ph", "Dan Cedrick", null, "Dela Torre", "skyDan01", true, "DTorre" }
                 });
 
             migrationBuilder.CreateIndex(

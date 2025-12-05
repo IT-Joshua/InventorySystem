@@ -1,13 +1,13 @@
 using System;
-using Backend.Dtos.Users;
-using Backend.Entities.Users;
+using Backend.Dtos;
+using Backend.Entities;
 
-namespace Backend.Mapping.Users;
+namespace Backend.Mapping;
 
 //logs
 public static class LogsMapping
 {
-    public static LogsDto ToLogsList(this Logs_entity LogsDto)
+    public static LogsDto ToLogsList(this Log LogsDto)
     {
         return new(
             LogsDto.Id,
@@ -20,9 +20,9 @@ public static class LogsMapping
         );
     }
 
-    public static Logs_entity ToLogsEntity(this AddLogsDto item)
+    public static Log ToLogsEntity(this AddLogsDto item)
     {
-        return new Logs_entity()
+        return new Log()
         {
             UserId = item.UserId,
             Log_type = item.Log_type,

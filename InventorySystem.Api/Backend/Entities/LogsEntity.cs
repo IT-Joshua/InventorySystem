@@ -1,13 +1,12 @@
 using System;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Backend.Entities.Users;
-public class Logs_entity
+namespace Backend.Entities;
+public class Log
 { 
-    public int Id { get; set; }
-    public int UserId { get; set; }
-    public User_entity? User { get; set; }
+    public Guid Id { get; set; }
+    public Guid UserId { get; set; }
+    public User? User { get; set; }
     [MaxLength(100)]
     public required string Log_type { get; set; }
     public required string Log_message { get; set; }

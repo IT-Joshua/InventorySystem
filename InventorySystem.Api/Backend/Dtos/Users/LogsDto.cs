@@ -1,11 +1,10 @@
 using System.ComponentModel.DataAnnotations;
-using Microsoft.OpenApi.Models;
 
-namespace Backend.Dtos.Users;
+namespace Backend.Dtos;
 
 public record class LogsDto
 (
-    int Id,
+    Guid Id,
     string Firstname,
     string Lastname,
     string Log_type,
@@ -15,7 +14,7 @@ public record class LogsDto
 );
 public record class AddLogsDto
 (   
-    [Required] int UserId,
+    [Required] Guid UserId,
     [Required][StringLength(100)] string Log_type,
     [Required][StringLength(100)] string Log_message,
     int Error_id

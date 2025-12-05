@@ -1,8 +1,8 @@
-using System;
 using Backend.Data;
-using Backend.Dtos.Users;
-using Backend.Entities.Users;
-using Backend.Mapping.Users;
+using Backend.Dtos;
+using Backend.Entities;
+using Backend.Mapping;
+using Backend.Services;
 using Microsoft.EntityFrameworkCore;
 
 namespace Backend.Endpoints;
@@ -14,7 +14,7 @@ public static class UserEndpoints
     public static RouteGroupBuilder MapUserEndpoints(this WebApplication app)
     {
 
-        var group = app.MapGroup("User").WithParameterValidation();
+        var group = app.MapGroup("User").WithParameterValidation().WithTags("User Endpoints");
 
         // group.MapGet("/", async (MyDbContext dbContext) =>
         //     await dbContext.Tbl_Users
@@ -23,11 +23,10 @@ public static class UserEndpoints
         // );
 
         //per username
-        group.MapGet("/{username_email}/{Logtype}", async (string username_email, string Logtype, MyDbContext dbContext) =>
-
+        group.MapGet("/{username_email}", async (string username_email, string Logtype, MyDbContext dbContext) =>
             {
                 var users = await dbContext.Tbl_Users
-                        .Where(Tbl_Users => (Tbl_Users.Username == username_email || Tbl_Users.Email == username_email) && Tbl_Users.Status != false && Tbl_Users.Access != "PENDING")
+                        .Where(Tbl_Users => (Tbl_Users.Username == username_email || Tbl_Users.Email == username_email) && Tbl_Users.IsActive && Tbl_Users.ApprovalStatus != ApprovalStatus.Pending)
                         // .Select(Tbl_Users => Tbl_Users.ToLoginUsersDto())
                         .AsNoTracking()
                         .ToListAsync();
@@ -37,7 +36,7 @@ public static class UserEndpoints
                     {
                         var user = users.First();
 
-                        var log = new Logs_entity
+                        var log = new Log
                         {
                             UserId = user.Id,
                             Log_type = Logtype,
@@ -53,7 +52,7 @@ public static class UserEndpoints
                 {
                     var user = users.First();
 
-                    var log = new Logs_entity
+                    var log = new Log
                     {
                         UserId = user.Id,
                         Log_type = Logtype,
@@ -69,15 +68,50 @@ public static class UserEndpoints
 
                 return Results.Ok(dtoList);
 
-            });
-
+        });
+        
         //add value
         group.MapPost("/", async (CreateUserDto newUser, MyDbContext dbContext) =>
-          {
-              User_entity User = newUser.ToUserEntity();
+        {
+              User User = newUser.ToUserEntity();
               dbContext.Tbl_Users.Add(User);
               await dbContext.SaveChangesAsync();
-          });
+        });
+
+        group.MapPost("/register", async (CreateUserDto newUser, MyDbContext dbContext, IUserServices userServices) =>
+        {
+           var result  = await userServices.RegisterUserAsync(newUser);
+           if (!result.IsSuccess)
+                return Results.BadRequest(result.ErrorMessage);
+
+            return Results.Ok(result.User);
+        });
+
+        group.MapPost("/login", async (UserLoginCredentialDto userCredential, MyDbContext dbContext, IUserServices userServices) =>
+        {
+           var result = await userServices.AuthenticateUserAsync(userCredential);
+            if (!result.IsSuccess)
+            {   
+                return Results.BadRequest(result.ErrorMessage);
+            }
+            return Results.Ok(result.ToTokenResponseDto());
+        });
+
+        group.MapPost("/refresh-token", async (RefreshTokenRequestDto refreshTokenRequest, MyDbContext dbContext, IUserServices userServices) =>
+        {        
+            var result = await userServices.RefreshTokenAsync(refreshTokenRequest);
+            if (!result.IsSuccess)
+            {   
+                return Results.BadRequest(result.ErrorMessage);
+            }
+            return Results.Ok(result.ToTokenResponseDto());
+        });
+
+        group.MapGet("/Auth", async () =>
+        {
+            return Results.Ok("User Endpoint is working!");   
+        }).RequireAuthorization(policy => policy.RequireRole("Admin", "SuperAdmin"));
+  
 
         // group.MapGet("/Access", async (MyDbContext dbContext) =>
         //      await dbContext.Tbl_Access

@@ -1,7 +1,6 @@
 using System.ComponentModel.DataAnnotations;
-using Microsoft.OpenApi.Models;
 
-namespace Backend.Dtos.Users;
+namespace Backend.Dtos;
 public record class GrantAccessDto
 (
     int Id,
@@ -13,7 +12,7 @@ public record class GrantAccessDto
 
 public record class AddGrantAccessDto
 (
-    [Required] int UserId,
+    [Required] Guid UserId,
     [Required] int AccessId,
     [Required] bool Status
 );

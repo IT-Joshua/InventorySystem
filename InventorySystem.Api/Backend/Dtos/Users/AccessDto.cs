@@ -1,10 +1,9 @@
 using System.ComponentModel.DataAnnotations;
-using Microsoft.OpenApi.Models;
 
-namespace Backend.Dtos.Users;
+namespace Backend.Dtos;
 public record class AccessDto
 (
-    int Id,
+    Guid Id,
     string Access
 );
 public record class AddAccessDto

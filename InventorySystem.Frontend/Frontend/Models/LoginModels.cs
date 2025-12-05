@@ -55,4 +55,36 @@ namespace Frontend.Components.Models
         [Required]
         public string? ConfirmPassword { get; set; }
     }
+
+    public class RegisterResult
+    {
+        public bool IsSuccess { get; set; }
+        public string? ErrorMessage { get; set; }
+    }
+
+    public class LoginCredentials
+    {
+        public required string UsernameOrEmail {get; set;}
+        public required string Password {get; set;}
+    }
+
+    public class LoginResult
+    {
+        public bool IsSuccess { get; set; }
+        public string? ErrorMessage { get; set; }
+        public Tokens? Tokens { get; set; }
+    }
+
+    public class UserCredentials{
+        public required string FirstName {get;set;}
+        public required string LastName {get;set;}
+        public required string Email {get;set;}
+    }
+
+    public class Tokens
+    {
+        public required string AccessToken { get; set; }
+        public required string RefreshToken { get; set; }
+
+    }
 }

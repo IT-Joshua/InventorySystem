@@ -1,0 +1,13 @@
+﻿@page "/logout"
+@using Frontend.Authentication
+@inject AuthenticationStateProvider AuthStateProvider
+@inject NavigationManager NavigationManager
+<h3>Logout</h3>
+
+@code 
+{
+    protected override async Task OnInitializedAsync(){
+        await ((CustomAuthStateProvider)AuthStateProvider).MarkUserAsLoggedOut();
+        NavigationManager.NavigateTo("/");
+    }
+}

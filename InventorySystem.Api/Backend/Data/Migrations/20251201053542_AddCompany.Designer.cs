@@ -4,6 +4,7 @@ using Backend.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Backend.Data.Migrations
 {
     [DbContext(typeof(MyDbContext))]
-    partial class MyDbContextModelSnapshot : ModelSnapshot
+    [Migration("20251201053542_AddCompany")]
+    partial class AddCompany
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -22,52 +25,17 @@ namespace Backend.Data.Migrations
 
             MySqlModelBuilderExtensions.AutoIncrementColumns(modelBuilder);
 
-            modelBuilder.Entity("Backend.Entities.Access", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("AccessName")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("varchar(50)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Tbl_Access");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            AccessName = "View Module 1"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            AccessName = "Add Module 1"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            AccessName = "Edit Module 1"
-                        });
-                });
-
-            modelBuilder.Entity("Backend.Entities.Company", b =>
+            modelBuilder.Entity("Backend.Entities.Company.Company", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("char(36)");
 
-                    b.Property<string>("Company_Name")
+                    b.Property<string>("CompanyName")
                         .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.Property<DateTime>("Created_Timestamp")
+                    b.Property<DateTime>("Created_timestamp")
                         .HasColumnType("datetime(6)");
 
                     b.Property<bool>("Is_Active")
@@ -88,7 +56,7 @@ namespace Backend.Data.Migrations
                     b.Property<int>("Transaction_Series")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("Updated_Timestamp")
+                    b.Property<DateTime>("Updated_timestamp")
                         .HasColumnType("datetime(6)");
 
                     b.HasKey("Id");
@@ -96,16 +64,13 @@ namespace Backend.Data.Migrations
                     b.ToTable("Tbl_Company");
                 });
 
-            modelBuilder.Entity("Backend.Entities.CompanyUser", b =>
+            modelBuilder.Entity("Backend.Entities.Company.Company_User", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("char(36)");
 
-                    b.Property<Guid?>("CompanyId")
-                        .HasColumnType("char(36)");
-
-                    b.Property<DateTime>("Created_Timestamp")
+                    b.Property<DateTime>("Created_timestamp")
                         .HasColumnType("datetime(6)");
 
                     b.Property<bool>("Is_Active")
@@ -114,22 +79,55 @@ namespace Backend.Data.Migrations
                     b.Property<int>("Role")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("Updated_Timestamp")
-                        .HasColumnType("datetime(6)");
-
                     b.Property<Guid?>("UserId")
                         .HasColumnType("char(36)");
 
-                    b.HasKey("Id");
+                    b.Property<Guid>("User_id")
+                        .HasColumnType("char(36)");
 
-                    b.HasIndex("CompanyId");
+                    b.HasKey("Id");
 
                     b.HasIndex("UserId");
 
                     b.ToTable("Tbl_Company_User");
                 });
 
-            modelBuilder.Entity("Backend.Entities.GrantAccess", b =>
+            modelBuilder.Entity("Backend.Entities.Users.Access_entity", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Access")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("varchar(50)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Tbl_Access");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Access = "View Module 1"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Access = "Add Module 1"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Access = "Edit Module 1"
+                        });
+                });
+
+            modelBuilder.Entity("Backend.Entities.Users.Grant_Access_entity", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -155,7 +153,7 @@ namespace Backend.Data.Migrations
                     b.ToTable("tbl_Grant_Access");
                 });
 
-            modelBuilder.Entity("Backend.Entities.Log", b =>
+            modelBuilder.Entity("Backend.Entities.Users.Log", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -188,7 +186,7 @@ namespace Backend.Data.Migrations
                     b.ToTable("Tbl_Logs");
                 });
 
-            modelBuilder.Entity("Backend.Entities.User", b =>
+            modelBuilder.Entity("Backend.Entities.Users.User", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -222,12 +220,6 @@ namespace Backend.Data.Migrations
                         .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.Property<string>("RefreshToken")
-                        .HasColumnType("longtext");
-
-                    b.Property<DateTime?>("RefreshTokenExpiryTime")
-                        .HasColumnType("datetime(6)");
-
                     b.Property<string>("Username")
                         .IsRequired()
                         .HasMaxLength(50)
@@ -238,30 +230,24 @@ namespace Backend.Data.Migrations
                     b.ToTable("Tbl_Users");
                 });
 
-            modelBuilder.Entity("Backend.Entities.CompanyUser", b =>
+            modelBuilder.Entity("Backend.Entities.Company.Company_User", b =>
                 {
-                    b.HasOne("Backend.Entities.Company", "Company")
-                        .WithMany()
-                        .HasForeignKey("CompanyId");
-
-                    b.HasOne("Backend.Entities.User", "User")
+                    b.HasOne("Backend.Entities.Users.User", "User")
                         .WithMany()
                         .HasForeignKey("UserId");
-
-                    b.Navigation("Company");
 
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("Backend.Entities.GrantAccess", b =>
+            modelBuilder.Entity("Backend.Entities.Users.Grant_Access_entity", b =>
                 {
-                    b.HasOne("Backend.Entities.Access", "Access")
+                    b.HasOne("Backend.Entities.Users.Access_entity", "Access")
                         .WithMany()
                         .HasForeignKey("AccessId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Backend.Entities.User", "User")
+                    b.HasOne("Backend.Entities.Users.User", "User")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -272,9 +258,9 @@ namespace Backend.Data.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("Backend.Entities.Log", b =>
+            modelBuilder.Entity("Backend.Entities.Users.Log", b =>
                 {
-                    b.HasOne("Backend.Entities.User", "User")
+                    b.HasOne("Backend.Entities.Users.User", "User")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
