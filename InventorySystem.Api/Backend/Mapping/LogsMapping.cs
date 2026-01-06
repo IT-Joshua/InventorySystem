@@ -5,7 +5,7 @@ using Backend.Entities;
 namespace Backend.Mapping;
 
 //logs
-public static class LogsMapping
+public static class LogsMapping1
 {
     public static LogsDto ToLogsList(this Log LogsDto)
     {

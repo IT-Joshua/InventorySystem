@@ -1,7 +1,7 @@
 using System.ComponentModel.DataAnnotations;
 
 namespace Backend.Dtos;
-public record class GrantAccessDto
+public record class GrantAccessDto1
 (
     int Id,
     string Firstname,
@@ -10,7 +10,7 @@ public record class GrantAccessDto
     bool Status
 );
 
-public record class AddGrantAccessDto
+public record class AddGrantAccessDto1
 (
     [Required] Guid UserId,
     [Required] int AccessId,

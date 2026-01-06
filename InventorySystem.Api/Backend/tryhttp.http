@@ -1,0 +1,73 @@
+GET  http://localhost:5209/Access
+
+###
+POST http://localhost:5209/Access
+Content-Type: application/json
+
+{
+    "ModuleId": "08de3edd-64a9-42e0-8d7e-07eea7c9cfa5",
+    "AccessCode": "DELETE",
+    "Description": "Access to DELETE"
+}
+
+###
+GET http://localhost:5209/Module
+Content-Type: application/json
+
+###
+POST http://localhost:5209/Module
+Content-Type: application/json
+
+{
+   "Module_name": "Module 1",
+    "Description": "Module 1 Description",
+    "Is_active": true
+}
+
+###
+PUT http://localhost:5209/Module/08de3edd-64a9-42e0-8d7e-07eea7c9cfa5
+Content-Type: application/json
+
+{
+   "Module_name": "Module 1",
+    "Description": "Module 1 Description",
+    "Is_active": true
+}
+
+
+###
+GET http://localhost:5209/GrantAccess
+
+###
+GET http://localhost:5209/GrantAccess/08de3c57-bc6a-473d-841d-913c871b113a
+
+###
+POST http://localhost:5209/GrantAccess
+Content-Type: application/json
+
+{
+    "CompanyId": "bcd566c2-6913-4f37-bbc5-effad601939a",
+    "UserId": "08de3c57-bc6a-473d-841d-913c871b113a",
+    "AccessId": "ecbc50e7-7fcd-482a-af2f-b6b797db5105",
+    "Status": true
+}
+
+###
+DELETE http://localhost:5209/GrantAccess/8834bc82-7226-4d03-8a49-1363533db699
+
+###
+GET  http://localhost:5209/GrantAccess/C
+Content-Type: application/json
+
+###
+POST http://localhost:5209/GrantAccess/C
+Content-Type: application/json
+
+{
+    "Company_Name": "Skybest",
+    "Prefix": "SLC",
+    "Transaction_Prefix": "SLC",
+    "Transaction_Series": "0000",
+    "Transaction_Format": "SLC011",
+    "Is_Active": true
+}

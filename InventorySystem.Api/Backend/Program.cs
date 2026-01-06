@@ -56,5 +56,8 @@ app.UseAuthorization();
 app.MapUserEndpoints();
 app.MapCompanyEndpoints();
 app.MapCompanyUserEndpoints();
+app.MapAccessEndpoints();
+app.MapModuleEndpoints();
+app.MapGrantAccessEndpoints();
 
 app.Run();

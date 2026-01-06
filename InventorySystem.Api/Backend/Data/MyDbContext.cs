@@ -7,19 +7,20 @@ public class MyDbContext : DbContext
 {
     public MyDbContext(DbContextOptions<MyDbContext> options) : base(options) { }
     public DbSet<User> Tbl_Users { get; set; }
-    public DbSet<Access> Tbl_Access { get; set; }
-    public DbSet<GrantAccess> tbl_Grant_Access { get; set; }
+    public DbSet<Access_Entity> Tbl_Access { get; set; }
+    public DbSet<GrantAccess_Entity> Tbl_Grant_Access { get; set; }
+    public DbSet<Module_Entity> Tbl_Module { get; set; }
     public DbSet<Log> Tbl_Logs { get; set; }
     public DbSet<CompanyUser> Tbl_Company_User { get; set; }
     public DbSet<Company> Tbl_Company { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.Entity<Access>().HasData(
-            new { Id = 1, AccessName = "View Module 1" },
-            new { Id = 2, AccessName = "Add Module 1" },
-            new { Id = 3, AccessName = "Edit Module 1" }
-        );
+        // modelBuilder.Entity<Access>().HasData(
+        //     new { Id = 1, AccessName = "View Module 1" },
+        //     new { Id = 2, AccessName = "Add Module 1" },
+        //     new { Id = 3, AccessName = "Edit Module 1" }
+        // );
 
         // modelBuilder.Entity<User>().HasData(
         

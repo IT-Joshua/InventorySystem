@@ -19,3 +19,24 @@ Content-Type: application/json
 "Access" : "",
 "Status" : true
 }
+
+###
+POST http://localhost:5209/user/register
+Content-Type: application/json
+
+{
+    "Firstname": "Norwin",
+    "Lastname": "Nabong",
+    "Email": "Norwin.Nabong@skybest.com.ph",
+    "Username": "nnabong",
+    "Password": "skyNorwin01"
+}
+
+###
+GET http://localhost:5209/user/login
+Content-Type: application/json
+
+{
+    "UsernameOrEmail": "nnabong",
+    "Password": "skyNorwin01"
+}
